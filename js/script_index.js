@@ -31,7 +31,7 @@ $(document).ready(function () {
                             <td><a href="ver_personal.php?id=${enfermero.id_enfermero || ''}">Ver</a></td>
                             ${userType === 'admin' ? `
                                 <td><a href="editar.php?id=${enfermero.id_enfermero || ''}">Editar</a></td>
-                                <td><button class="btn btn-danger btn-sm baja-formal" data-id="${enfermero.id_enfermero}"> Dar de Baja </button></td>
+                                <td><button class="btn btn-danger btn-sm baja-formal" data-id-unregisteringDate="${enfermero.id_enfermero}"> Dar de Baja </button></td>
                             ` : ''}
                         </tr>
                     `;

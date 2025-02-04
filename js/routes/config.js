@@ -1,6 +1,6 @@
 
 
-// export const API_ROUTES = {
-//     Colocar el nombre del proyecto
-//     delete: "/formation_staff/php/controllers/delete.controller.php"
-// };
+export const API_ROUTES = {
+    // Colocar el nombre del proyecto
+    updateDate: "/formation_staff/php/controllers/modal.controller.php"
+};

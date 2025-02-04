@@ -124,34 +124,35 @@
             }
         }
 
-        function sendDateTermination($idEnfermero, $fechaBaja) {
-            // Validar que los parámetros no estén vacíos
-            if (empty($idEnfermero) || empty($fechaBaja)) {
-                return "Error: ID del enfermero o fecha de baja no pueden estar vacíos.";
+        function sendDateTermination( $idEnfermero, $fechaBaja ) {
+
+            if( empty( $idEnfermero ) || empty ( $fechaBaja ) ){
+                return "Error: Los campos propocionados no pueden estar vacíos";
             }
-        
-            // Escapar los valores para evitar inyección SQL
-            $idEnfermero = $this->escapeString($idEnfermero);
-            $fechaBaja = $this->escapeString($fechaBaja);
-        
-            // Construcción de la consulta SQL
-            $query = "UPDATE datos_personal 
-                      SET status_personal = 'INACTIVO', fecha_baja = '$fechaBaja' 
+            
+            $idEnfermero = $this->escapeString( $idEnfermero );
+            $fechaBaja   = $this->escapeString( $fechaBaja );
+
+            $query = "UPDATE datos_personal
+                      SET status_personal = 'INACTIVO', fecha_baja = '$fechaBaja'
                       WHERE id_enfermero = '$idEnfermero'";
-        
+            
             // Obtener conexión y ejecutar la consulta
             $onConnection = $this->getConnections();
-            
-            if (mysqli_query($onConnection, $query)) {
-                $rowsAffected = mysqli_affected_rows($onConnection);
-                $this->closeConnection($onConnection);
-                return $rowsAffected; // Número de filas afectadas (éxito)
+
+            if( mysqli_query( $onConnection, $query ) ){
+                $rowsAffected = mysqli_affected_rows( $onConnection );
+                $this->closeConnection( $onConnection );
+                return $rowsAffected;   // Número de filas afectadas (éxito)
             } else {
-                $error_message = mysqli_error($onConnection);
-                $this->closeConnection($onConnection);
-                return "Error en la actualización: $error_message";
+                $error_message = mysqli_error( $onConnection );
+                $this->closeConnection( $onConnection );
+                return "Error, no fue posible enviar la fecha de baja: $error_message";
             }
         }
+
+
+
         
 
 

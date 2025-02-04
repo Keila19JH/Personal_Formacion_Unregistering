@@ -1,9 +1,14 @@
 
 import { setAlerts } from "./plugins/alerts.plugin.js"
+import { API_ROUTES } from "./routes/config.js";
+
+
+const updateDateURL = API_ROUTES.updateDate;
 
 $(document).on( "click", ".baja-formal", function() {
 
-    let idEnfermero = $( this ).data( "id" );
+    let idEnfermero = $( this ).data( "id-unregisteringdate" );
+    //console.log("ID Enfermero:", idEnfermero);
 
     //console.log(setAlerts);
     
@@ -40,9 +45,9 @@ $(document).on( "click", ".baja-formal", function() {
                 if( confirmResult.isConfirmed ){
                     // Send the AJAX request with the date termination
                     $.ajax({
-                        url: "/formation_staff/php/controllers/modal.controller.php",
+                        url: updateDateURL,
                         type: "POST",
-                        data: { id:idEnfermero, fechaBaja:fechaBaja },
+                        data: { id_unregisteringdate: idEnfermero, fechaBaja:fechaBaja },
                         success: function( response ){
                             setAlerts.successAlert("Se ha dado de baja correctamente.",)
                             .then( () =>{

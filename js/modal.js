@@ -2,7 +2,6 @@
 import { setAlerts } from "./plugins/alerts.plugin.js"
 import { API_ROUTES } from "./routes/config.js";
 
-
 const updateDateURL = API_ROUTES.updateDate;
 
 $(document).on( "click", ".baja-formal", function() {

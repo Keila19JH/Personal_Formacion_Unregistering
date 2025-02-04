@@ -7,7 +7,8 @@ $connectionDB = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
 
 
 $query_personales = "SELECT dp.*,ctr.* FROM datos_personal dp
-    JOIN contrato ctr ON dp.contrato = ctr.id_contrato";
+    JOIN contrato ctr ON dp.contrato = ctr.id_contrato 
+    WHERE dp.status_personal = 'ACTIVO'";
 $data = $connectionDB->getRows($query_personales);
 
 echo json_encode($data);

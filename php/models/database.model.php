@@ -152,11 +152,6 @@
         }
 
 
-
-        
-
-
-
         // function deleteData( $table, $whereColumn, $whereValue){
             
         //     $whereValue = $this-> escapeString( $whereValue );

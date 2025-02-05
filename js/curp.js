@@ -1,53 +1,46 @@
 
-$(document).ready(function () {
-    // Detectar cambios en el campo CURP
-    $('#curp').on('input', function () {
-        var curp = $(this).val().toUpperCase(); // Convertir a mayúsculas
-        $(this).val(curp); // Asignar el valor en mayúsculas de nuevo al campo
-    });
-});
+$( document ).ready( function(){
+    $( '#curp' ).on( 'input', function() {
+        let curp = $( this ).val().toUpperCase();
 
-$(document).ready(function () {
-    $('#curp').on('input', function () {
-        var curp = $(this).val().toUpperCase(); // Convertir a mayúsculas
+        if( curp.length === 18 ){
+            let genero = curp.charAt( 10 );
+            let fechaNacimiento = curp.substr( 4, 6 );
+            let año = parseInt( fechaNacimiento.substr( 0, 2 ), 10 );
+            let mes = parseInt( fechaNacimiento.substr( 2, 2 ), 10 );
+            let dia = parseInt( fechaNacimiento.substr( 4, 2 ), 10 );
 
-        // Validamos que la longitud del CURP sea correcta (18 caracteres)
-        if (curp.length === 18) {
-            var genero = curp.charAt(10);
-            var fechaNacimiento = curp.substr(4, 6);
-            var año = fechaNacimiento.substr(0, 2);
-            var mes = fechaNacimiento.substr(2, 2);
-            var dia = fechaNacimiento.substr(4, 2);
+            //Determinar siglo correcto
+            let siglo = ( año >= 0 && año <=23 ) ? 2000 : 1900;  // Para años 00-23 entran en -> Siglo XXI ; los demás entran en -> Siglo XX 
+            let añoCompleto = siglo + año;
 
-            // Obtener fecha de nacimiento
-            var fechaNacimientoCompleta = new Date("19" + año + "-" + mes + "-" + dia);
-            var onomastico = fechaNacimientoCompleta.toISOString().split('T')[0];
-
-            // Calcular edad
-            var hoy = new Date();
-            var edad = hoy.getFullYear() - fechaNacimientoCompleta.getFullYear();
-            var mesActual = hoy.getMonth() + 1;
-            if (mesActual < parseInt(mes) || (mesActual === parseInt(mes) && hoy.getDate() < parseInt(dia))) {
+            // Crear la fecha de nacimiento
+            let fechaNacimientoCompleta = new Date( añoCompleto, mes - 1, dia );
+            
+            // Validar si la fecha es correcta
+            let onomastico = !isNaN( fechaNacimientoCompleta ) ? fechaNacimientoCompleta.toISOString().split( 'T' )[0] : '';
+            
+            //Calcular edad
+            let hoy = new Date();
+            let edad = hoy.getFullYear() - fechaNacimientoCompleta.getFullYear();
+           
+            if( 
+                hoy.getMonth() < fechaNacimientoCompleta.getMonth() ||
+                (hoy.getMonth() === fechaNacimientoCompleta.getMonth() && hoy.getDate() < fechaNacimientoCompleta.getDate())
+            ){
                 edad--;
             }
 
-            // Obtener RFC sin homoclave
-            var rfc = curp.substr(0, 10);
+            //Obtener RFC sin homoclave
+            let rfc = curp.substr( 0, 10 );
 
-            // Asignar valores a los campos
-            $('#genero').val(genero);
-            $('#onomastico').val(onomastico);
-            $('#edad').val(edad);
-            $('#RFC').val(rfc);
+            //Asignar valor a los campos
+            $( '#genero' ).val( genero );
+            $( '#onomastico' ).val( onomastico );
+            $( '#edad' ).val( !isNaN( edad ) ? edad: '' );
+            $( '#RFC' ).val( rfc );
         } else {
-            // Limpiar campos si el CURP no tiene la longitud correcta
-            $('#genero').val('');
-            $('#onomastico').val('');
-            $('#edad').val('');
-            $('#RFC').val('');
+            $( '#genero, #onomastico, #edad, #RFC' ).val( '' );
         }
     });
 });
-
-
-
